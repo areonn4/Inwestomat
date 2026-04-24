@@ -429,31 +429,42 @@ def main() -> None:
 
     result = st.session_state.get("analysis_result")
 
-    if result is None:
-        try:
-            result = load_existing_analysis()
-        except Exception as exc:
-            logger.exception("Failed to load previously saved analysis.")
-            st.warning(
-                "Znaleziono zapisane artefakty, ale nie udało się ich bezpiecznie odczytać. "
-                "Uruchom analizę ponownie, aby odbudować dane."
-            )
-            st.caption(f"Szczegół techniczny: {exc}")
-            result = None
-        else:
-            if result is not None:
-                st.session_state["analysis_result"] = result
+    # # Wersja dla localhost, zeby zawsze pamietalo poprzednie dane i wczytywalo
+    # if result is None:
+    #     try:
+    #         result = load_existing_analysis()
+    #     except Exception as exc:
+    #         logger.exception("Failed to load previously saved analysis.")
+    #         st.warning(
+    #             "Znaleziono zapisane artefakty, ale nie udało się ich bezpiecznie odczytać. "
+    #             "Uruchom analizę ponownie, aby odbudować dane."
+    #         )
+    #         st.caption(f"Szczegół techniczny: {exc}")
+    #         result = None
+    #     else:
+    #         if result is not None:
+    #             st.session_state["analysis_result"] = result
 
+    # if result is None:
+    #     st.title("Automatyzacja analizy portfela walutowego")
+    #     st.info(
+    #         "Nie znaleziono jeszcze gotowego pliku Parquet. "
+    #         "Ustaw parametry po lewej stronie i uruchom analizę."
+    #     )
+    #     return
+
+    # render_dashboard(result)
+
+    # # Aktualna wersja dla osobnej sesji online na stremlit.app
     if result is None:
         st.title("Automatyzacja analizy portfela walutowego")
         st.info(
-            "Nie znaleziono jeszcze gotowego pliku Parquet. "
-            "Ustaw parametry po lewej stronie i uruchom analizę."
+            "Wprowadź parametry inwestycji w menu po lewej stronie "
+            "i kliknij 'Uruchom analizę', aby wygenerować raport."
         )
         return
 
     render_dashboard(result)
-
 
 if __name__ == "__main__":
     main()
