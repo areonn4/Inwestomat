@@ -1,6 +1,9 @@
 # Inwestomat
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://inwestomat.streamlit.app/)
+
 Link do aplikacji: https://inwestomat.streamlit.app/
+
+
 Projekt realizuje zadanie kwalifikacyjne jako mały, ale profesjonalny pipeline danych do analizy portfela walutowego opartego na kursach NBP.
 
 Rozwiązanie:
