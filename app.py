@@ -429,7 +429,8 @@ def main() -> None:
 
     result = st.session_state.get("analysis_result")
 
-    # # Wersja dla localhost, zeby zawsze pamietalo poprzednie dane i wczytywalo
+    ## [#wersjalokalna123]
+
     # if result is None:
     #     try:
     #         result = load_existing_analysis()
@@ -455,7 +456,13 @@ def main() -> None:
 
     # render_dashboard(result)
 
-    # # Aktualna wersja dla osobnej sesji online na stremlit.app
+    ## [#wersjalokalna123]
+
+    ## # Rozwiązanie problemu z współdzieloną sesją na streamlit.app, aby uzyskać osobną sesje (żeby program nie wczytywał poprzednich danych),
+    ## należy odkomentować fragment kodu [#wersjaonline123] oraz zakomentować kod [#wersjalokalna123].
+
+    ##[#wersjaonline123] 
+
     if result is None:
         st.title("Automatyzacja analizy portfela walutowego")
         st.info(
@@ -463,8 +470,9 @@ def main() -> None:
             "i kliknij 'Uruchom analizę', aby wygenerować raport."
         )
         return
-
     render_dashboard(result)
+
+    ##[#wersjaonline123] 
 
 if __name__ == "__main__":
     main()
