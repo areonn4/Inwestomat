@@ -429,50 +429,43 @@ def main() -> None:
 
     result = st.session_state.get("analysis_result")
 
-    ## [#wersjalokalna123]
+    # FEATURE FLAG: Zarządzanie stanem (Local vs Cloud)
+    # Tryb lokalny (True) odczytuje ostatni wynik z fizycznego pliku na dysku (Parquet).
+    # W środowisku chmurowym / wielodostępnym (False) blokujemy odczyt dysku, 
+    # aby uniknąć wycieku sesji (Race Condition) między różnymi użytkownikami.
+    ENABLE_SHARED_DISK_CACHE = False
 
-    # if result is None:
-    #     try:
-    #         result = load_existing_analysis()
-    #     except Exception as exc:
-    #         logger.exception("Failed to load previously saved analysis.")
-    #         st.warning(
-    #             "Znaleziono zapisane artefakty, ale nie udało się ich bezpiecznie odczytać. "
-    #             "Uruchom analizę ponownie, aby odbudować dane."
-    #         )
-    #         st.caption(f"Szczegół techniczny: {exc}")
-    #         result = None
-    #     else:
-    #         if result is not None:
-    #             st.session_state["analysis_result"] = result
+    if ENABLE_SHARED_DISK_CACHE and result is None:
+        try:
+            result = load_existing_analysis()
+        except Exception as exc:
+            logger.exception("Failed to load previously saved analysis.")
+            st.warning(
+                "Znaleziono zapisane artefakty, ale nie udało się ich bezpiecznie odczytać. "
+                "Uruchom analizę ponownie, aby odbudować dane."
+            )
+            st.caption(f"Szczegół techniczny: {exc}")
+            result = None
+        else:
+            if result is not None:
+                st.session_state["analysis_result"] = result
 
-    # if result is None:
-    #     st.title("Automatyzacja analizy portfela walutowego")
-    #     st.info(
-    #         "Nie znaleziono jeszcze gotowego pliku Parquet. "
-    #         "Ustaw parametry po lewej stronie i uruchom analizę."
-    #     )
-    #     return
-
-    # render_dashboard(result)
-
-    ## [#wersjalokalna123]
-
-    ## # Rozwiązanie problemu z współdzieloną sesją na streamlit.app, aby uzyskać osobną sesje (żeby program nie wczytywał poprzednich danych),
-    ## należy odkomentować fragment kodu [#wersjaonline123] oraz zakomentować kod [#wersjalokalna123].
-
-    ##[#wersjaonline123] 
-
+    # Generowanie ekranu powitalnego, jeśli brak wyniku w sesji
     if result is None:
         st.title("Automatyzacja analizy portfela walutowego")
-        st.info(
-            "Wprowadź parametry inwestycji w menu po lewej stronie "
-            "i kliknij 'Uruchom analizę', aby wygenerować raport."
-        )
+        if ENABLE_SHARED_DISK_CACHE:
+            st.info(
+                "Nie znaleziono jeszcze gotowego pliku Parquet. "
+                "Ustaw parametry po lewej stronie i uruchom analizę."
+            )
+        else:
+            st.info(
+                "Wprowadź parametry inwestycji w menu po lewej stronie "
+                "i kliknij 'Uruchom analizę', aby wygenerować raport."
+            )
         return
-    render_dashboard(result)
 
-    ##[#wersjaonline123] 
+    render_dashboard(result)
 
 if __name__ == "__main__":
     main()
