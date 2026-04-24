@@ -1,0 +1,2 @@
+"""Inwestomat data pipeline package."""
+
