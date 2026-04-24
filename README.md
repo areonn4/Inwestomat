@@ -122,6 +122,6 @@ To jest istotne w kontekście migracji do Google Cloud, ponieważ `pandas` jest 
 
 ## Dokumentacja
 
-- [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md) — kompletna dokumentacja architektury, przepływu danych i odpowiedzialności komponentów
-- [docs/GOOGLE_CLOUD_MIGRATION.md](docs/GOOGLE_CLOUD_MIGRATION.md) — opis ścieżki migracji z lokalnego rozwiązania do Google Cloud
-- [docs/BANK_GRADE_CHECKLIST.md](docs/BANK_GRADE_CHECKLIST.md) — checklista jakościowa i bezpieczeństwa dla rozwiązania w stylu korporacyjnym
+- [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md) : kompletna dokumentacja architektury, przepływu danych i odpowiedzialności komponentów
+- [docs/GOOGLE_CLOUD_MIGRATION.md](docs/GOOGLE_CLOUD_MIGRATION.md) : opis ścieżki migracji z lokalnego rozwiązania do Google Cloud
+- [docs/BANK_GRADE_CHECKLIST.md](docs/BANK_GRADE_CHECKLIST.md) : checklista jakościowa i bezpieczeństwa dla rozwiązania w stylu korporacyjnym
